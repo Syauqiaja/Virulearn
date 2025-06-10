@@ -1,0 +1,4 @@
+.sidebar {
+    z-index: 1030;
+    overflow-y: auto;
+  }
