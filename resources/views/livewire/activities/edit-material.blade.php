@@ -1,18 +1,21 @@
 <div>
-    <x-admin-body-header :title="'Edit Materi'" :description="$activity_name">
-        <button class="btn btn-primary">Simpan</button>
+    <x-admin-body-header :title="'Edit Materi'" :description="$activity->title">
+        <button class="btn btn-primary" wire:click="save">Simpan</button>
     </x-admin-body-header>
 
     <div class="p-3 bg-white mt-3 mx-0 d-flex flex-row gap-2 flex-wrap">
-        @for ($i = 0; $i < $totalPage; $i++)
-            <a class="btn btn-outline-secondary d-inline">{{$i + 1}}</a>
-        @endfor
-        <a wire:click='addPage' class="btn btn-outline-secondary d-inline">Tambah halaman +</a>
+        @for ($i = 0; $i < count($content); $i++) <a
+            class="btn {{ $activeIndex == $i ? 'btn-primary' : 'btn-outline-secondary' }} d-inline"
+            wire:click='changeIndex({{ $i }})'>
+            {{$i + 1}}
+            </a>
+            @endfor
+            <a wire:click='addPage' class="btn btn-outline-secondary d-inline">Tambah halaman +</a>
     </div>
-    <div class="p-3 bg-white mt-3 mx-0 row g-2" wire:ignore>
-        <div id="editor" wire:model='content'>
-            <h2>Judul Aktivitas</h2>
-            <p>Some initial <strong>bold</strong> text</p>
+
+    <div class="p-3 bg-white mt-3 mx-0 row g-2 pb-5" wire:ignore>
+        <div id="editor-container">
+            <div id="editor">{!! $content[$activeIndex] !!}</div>
         </div>
     </div>
 </div>
@@ -21,10 +24,20 @@
 <script>
     let editor;
 
-    function initQuill() {
-        console.log("Quill initiated");
-
+    function initQuill(content = '') {
         const el = document.getElementById('editor');
+        if (!el) {
+            console.warn('Editor element not found. Delaying init...');
+            return;
+        }
+
+        if (el.classList.contains('ql-container')) {
+            const contentContainer = document.getElementsByClassName('ql-editor')[0];
+            contentContainer.innerHTML = content;
+            console.log('Quill already initialized.');
+            return;
+        }
+
         if (el && !el.classList.contains('ql-container')) {
             editor = new Quill('#editor', {
                 theme: 'snow',
@@ -67,6 +80,8 @@
         let previousImages = [];
 
         editor.on('text-change', function (delta, oldDelta, source) {
+            const html = editor.root.innerHTML;
+            @this.updateContent(html);
             var currentImages = [];
 
             var container = editor.container.firstChild;
@@ -87,32 +102,53 @@
             // Update the previous list of images
             previousImages = currentImages;
         });
-
-        Livewire.on('imageUploaded', function (imagePaths) {
-            if (Array.isArray(imagePaths) && imagePaths.length > 0) {
-                var imagePath = imagePaths[0]; // Extract the first image path from the array
-                console.log('Received imagePath:', imagePath);
-
-                if (imagePath && imagePath.trim() !== '') {
-                    var range = editor.getSelection(true);
-                    editor.insertText(range ? range.index : editor.getLength(), '\n', 'user');
-                    editor.insertEmbed(range ? range.index + 1 : editor.getLength(), 'image', imagePath);
-                } else {
-                    console.warn('Received empty or invalid imagePath');
-                }
-            } else {
-                console.warn('Received empty or invalid imagePaths array');
-            }
-        });
     }
-    document.addEventListener('livewire:load', () => {
-        initQuill();
-        Livewire.hook('message.processed', (message, component) => {
-            initQuill();
-        });
-    })
+    // document.addEventListener('livewire:load', () => {
+    //     const initialContent = document.getElementById("editor")?.innerHTML ?? "";
+    //     initQuill(initialContent);
+    //     Livewire.hook('message.processed', (message, component) => {
+    //         const iContent = document.getElementById("editor")?.innerHTML ?? "";
+    //         initQuill(iContent);
+    //     });
 
-    initQuill();
+    //     Livewire.on('load-quill', (data) => {
+    //         initQuill(data.content);
+    //     });
 
+    // })
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // This runs on page load
+        const editor = document.getElementById('editor');
+        if(editor != null){
+            const initialContent = editor?.innerHTML ?? '';
+            initQuill(initialContent);
+            console.log('DOMContentLoaded '+initialContent);
+        }else{
+            alert('QUILL EDITOR IS NULL');
+        }
+    });
+
+    window.Livewire.on('load-quill', (data) => {
+        initQuill(data[0].content);
+        console.log('load-quill '+data[0].content);
+    });
+
+    window.Livewire.on('imageUploaded', function (imagePaths) {
+        if (Array.isArray(imagePaths) && imagePaths.length > 0) {
+            var imagePath = imagePaths[0]; // Extract the first image path from the array
+            console.log('Received imagePath:', imagePath);
+
+            if (imagePath && imagePath.trim() !== '') {
+                var range = editor.getSelection(true);
+                editor.insertText(range ? range.index : editor.getLength(), '\n', 'user');
+                editor.insertEmbed(range ? range.index + 1 : editor.getLength(), 'image', imagePath);
+            } else {
+                console.warn('Received empty or invalid imagePath');
+            }
+        } else {
+            console.warn('Received empty or invalid imagePaths array');
+        }
+    });
 </script>
 @endscript
