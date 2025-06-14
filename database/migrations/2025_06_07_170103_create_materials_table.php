@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('activity_id')->index();
-            $table->string('title');
+            $table->string('title')->nullable();
             $table->text('content');
             $table->string('order');
             $table->timestamps();

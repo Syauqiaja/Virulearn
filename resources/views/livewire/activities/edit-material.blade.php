@@ -117,16 +117,25 @@
 
     // })
 
-    window.addEventListener('DOMContentLoaded', () => {
-        // This runs on page load
-        const editor = document.getElementById('editor');
-        if(editor != null){
-            const initialContent = editor?.innerHTML ?? '';
+    function initializeQuillEditor() {
+        const e = document.getElementById('editor');
+        if (e && !e.classList.contains('ql-container')) {
+            const initialContent = e.innerHTML ?? '';
             initQuill(initialContent);
-            console.log('DOMContentLoaded '+initialContent);
+            console.log('Quill initialized with:', initialContent);
+        } else if(!e){
+            console.warn('Editor not found');
         }else{
-            alert('QUILL EDITOR IS NULL');
+            console.warn('Editor already initialized');
         }
+    }
+    // After Livewire updates
+    window.addEventListener('livewire:navigated', ()=>{
+        initializeQuillEditor();
+        
+        console.log('message.processed');
+        console.log($wire);
+        
     });
 
     window.Livewire.on('load-quill', (data) => {

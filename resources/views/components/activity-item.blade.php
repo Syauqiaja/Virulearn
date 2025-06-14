@@ -15,7 +15,7 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex gap-3">
                 <div class="flex-grow-1">Materi 6 Halaman</div> 
-                <a class="btn btn-outline-primary py-1 rounded-pill" wire:navigate href="{{ route('activities.material.edit', ['id' => $activity->id]) }}"><svg
+                <a class="btn btn-outline-primary py-1 rounded-pill" href="{{ route('activities.material.edit', ['id' => $activity->id]) }}"><svg
                         xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-pencil-square" viewBox="0 0 16 16">
                         <path

@@ -1,4 +1,5 @@
 <div>
+    <x-flash-message/>
     <x-admin-body-header :title="'Daftar Aktivitas'" :description="'Daftar aktivitas yang telah ditambahkan'">
         <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createNewModal">Buat Baru
             +</button>

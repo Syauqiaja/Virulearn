@@ -3,9 +3,11 @@
 namespace App\Livewire\Activities;
 
 use App\Models\Activity;
+use App\Models\Material;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use phpDocumentor\Reflection\Types\This;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -35,13 +37,15 @@ class EditMaterial extends Component
         $this->id = $id;
 
         $this->activity = Activity::find($this->id);
-        $materials = $this->activity->materials()->get();
+        $materials = $this->activity->materials()->orderBy('order')->get();
 
         $this->activeIndex = 0;
         if ($materials->isEmpty()) {
             $this->content = ["<h2>Judul Aktivitas</h2><p>Some initial <strong>bold</strong> text</p>"];
         } else {
-            $this->content = $materials->map(fn($material) => $material->content)->toArray();
+            foreach ($materials as $material) {
+                $this->content[$material->order] = $material->content;
+            }
         }
     }
     public function render()
@@ -51,7 +55,40 @@ class EditMaterial extends Component
     public function save()
     {
         $this->isSaved = true;
+
+        $materials = $this->activity->materials()->orderBy('order')->get();
+        $existingCount = $materials->count();
+        $newCount = count($this->content);
+
+        // Update existing materials
+        for ($i = 0; $i < min($existingCount, $newCount); $i++) {
+            $materials[$i]->update([
+                'content' => $this->content[$i],
+                'order' => $i,
+            ]);
+        }
+
+        // Remove excessive materials
+        if ($existingCount > $newCount) {
+            for ($i = $newCount; $i < $existingCount; $i++) {
+                $materials[$i]->delete();
+            }
+        }
+
+        // Add more materials if needed
+        if ($existingCount < $newCount) {
+            for ($i = $existingCount; $i < $newCount; $i++) {
+                $this->activity->materials()->create([
+                    'content' => $this->content[$i],
+                    'order' => $i
+                ]);
+            }
+        }
+
+        flash('Materi berhasil diperbarui', 'success');
+        return $this->redirect(route('activities.index'), true);
     }
+
     public function changeIndex($index)
     {
         $this->activeIndex = $index;
