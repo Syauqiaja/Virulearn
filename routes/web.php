@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\UserController;
 use App\Livewire\Activities\EditMaterial;
 use App\Livewire\Activities\EditTests;
 use App\Livewire\Activities\Index as ActivityIndex;
@@ -8,6 +9,7 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\Home;
 use App\Livewire\Report\Index as ReportIndex;
+use App\Livewire\User\Detail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +27,11 @@ Route::middleware('auth')->group(function(){
     Route::delete('/activity/{id}', ActivityIndex::class)->name('activities.delete');
     Route::get("/activity/material/{id}/edit", EditMaterial::class)->name('activities.material.edit');
     Route::get("/activity/tests/{type}/{id}/edit", EditTests::class)->name('activities.tests.edit');
-    Route::get('/report', ReportIndex::class)->name('report.index');
     Route::get('/logout', LogoutController::class)->name('logout');
+
+    Route::get('/report', ReportIndex::class)->name('report.index');
+    Route::get('/users/datatable', [UserController::class, 'index'])->name('users.datatable');
+    Route::get('/users/{user}/detail', Detail::class)->name('user.detail');
 });
 
 // Guest routes
