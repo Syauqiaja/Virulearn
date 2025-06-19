@@ -21,21 +21,8 @@
 </head>
 
 <body class="bg-light">
-  <div class="container-fluid">
-    <div class="row g-0">
-      <!-- Sidebar -->
-      <x-navigation.navbar />
-      {{-- <nav class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
-        <div class="position-sticky pt-3">
-        </div>
-      </nav> --}}
 
-      <!-- Page content -->
-      <main class="col-md-9 ms-auto col-lg-10 px-3 py-3">
-        {{ $slot }}
-      </main>
-    </div>
-  </div>
+    {{ $slot }}
 
   @stack('modals')
   @livewire('wire-elements-modal')

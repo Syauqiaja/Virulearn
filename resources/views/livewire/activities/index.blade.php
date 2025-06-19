@@ -7,7 +7,7 @@
 
     <div class="p-3 bg-white mt-3 mx-0 row g-2">
         @foreach ($activities as $activity)
-            <x-activity-item :activity="$activity" wire:key='{{ $activity->id }}'>{{$activity->title}}</x-activity-item>
+            <x-activity-item :activity="$activity" wire:key='{{ $activity->id }}' :canEdit="true">{{$activity->title}}</x-activity-item>
         @endforeach
     </div>
 

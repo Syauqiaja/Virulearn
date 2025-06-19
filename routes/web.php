@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
+use App\Livewire\Activities\Detail as ActivitiesDetail;
 use App\Livewire\Activities\EditMaterial;
 use App\Livewire\Activities\EditTests;
 use App\Livewire\Activities\Index as ActivityIndex;
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function(){
     Route::delete('/activity/{id}', ActivityIndex::class)->name('activities.delete');
     Route::get("/activity/material/{id}/edit", EditMaterial::class)->name('activities.material.edit');
     Route::get("/activity/tests/{type}/{id}/edit", EditTests::class)->name('activities.tests.edit');
+    Route::get("/activity/{id}/detail", ActivitiesDetail::class)->name('activities.detail');
     Route::get('/logout', LogoutController::class)->name('logout');
 
     Route::get('/report', ReportIndex::class)->name('report.index');

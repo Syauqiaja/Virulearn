@@ -1,0 +1,19 @@
+$primary: #47ACFE;
+.btn-primary{
+    color: white !important;
+}
+.btn-light {
+    color: $primary !important;
+    background-color: white !important;
+    border: none !important;
+
+    &:hover {
+        background-color: #ddf0ff !important;
+    }
+
+    &:active {
+        background-color: #cde7fb !important;
+    }
+}
+
+@import 'bootstrap/scss/bootstrap';

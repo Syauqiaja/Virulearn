@@ -9,6 +9,8 @@ class Exam extends Model
     protected $fillable  = [
         'activity_id',
         'type',
+        'duration',
+        'kkm',
     ];
 
     public function questions(){

@@ -4,6 +4,7 @@ namespace App\Livewire\Activities;
 
 use App\Models\Activity;
 use App\Models\Exam;
+use Carbon\Carbon;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -18,11 +19,16 @@ class EditTests extends Component
     public $questions = [];
     public $answers = [];
     public $options = [];
+    public int $hour;
+    public int $minute;
+    public int $kkm;
 
     protected $rules = [
         'questions.*' => 'required|string',
         'answers.*.*' => 'required|string',
         'options.*' => 'required|in:A,B,C,D',
+        'hour' => 'required_with:minute',
+        'minute' => 'required_with:hour',
     ];
     public function mount(TestType $type, int $id){
         $this->type = $type;
@@ -36,6 +42,13 @@ class EditTests extends Component
                 $this->answers[$number][$opt] = $value["answer_".strtolower($opt)];
             }
             $this->options[$number] = $value["correct_answer"];
+        }
+        if($this->test->duration != null){
+            $this->hour = ($this->test->duration - ($this->test->duration % 60)) / 60;
+            $this->minute = $this->test->duration % 60;
+        }
+        if($this->test->kkm != null){
+            $this->kkm = $this->test->kkm;
         }
         if(count($this->questions) == 0){
             $this->questions[0] = null;
@@ -117,6 +130,19 @@ class EditTests extends Component
                 $qst[$i]->delete();
             }
         }
+
+        if(isset($this->hour) && isset($this->minute) ){
+            $this->test->duration = $this->hour * 60 + $this->minute;
+        }else{
+            $this->test->duration = null;
+        }
+        if(isset($this->kkm)){
+            $this->test->kkm = $this->kkm;
+        }else{
+            $this->test->kkm = null;
+        }
+
+        $this->test->save();
 
         flash('Soal '.$this->type->name.' berhasil diperbarui', 'success');
         return $this->redirect(route('activities.index'), true);

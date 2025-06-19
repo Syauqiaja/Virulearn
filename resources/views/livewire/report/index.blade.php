@@ -26,16 +26,16 @@
 
 @script
 <script>
+    let datatable;
     window.addEventListener('livewire:navigated', ()=>{
         let wrapper = document.getElementsByClassName('dataTables_wrapper');
         if(wrapper.length > 0){
             console.warn('datatable already initialized');
-            $('#userTable').DataTable().ajax.reload();
             return;
         }
         
 
-        $('#userTable').DataTable({
+        datatable = $('#userTable').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('users.datatable') }}",

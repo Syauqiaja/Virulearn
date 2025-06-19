@@ -1,6 +1,6 @@
 @props(['active' => false])
 @php
-    $classes = ($active ?? false) ? 'nav-link active' : 'nav-link link-dark'
+    $classes = ($active ?? false) ? 'nav-link active' : 'nav-link link-primary'
 @endphp
 <li class="nav-item">
     <a wire:navigate {{ $attributes->merge(['class' => $classes]) }} aria-current="page">
