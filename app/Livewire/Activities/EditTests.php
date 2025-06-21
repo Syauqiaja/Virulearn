@@ -153,4 +153,5 @@ enum TestType: string{
     case PRETEST = "pretest";
     case LATSOL = "latsol";
     case POSTTEST = "posttest";
+    case UNDEFINED = 'undefined';
 }

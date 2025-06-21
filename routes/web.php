@@ -6,8 +6,10 @@ use App\Livewire\Activities\Detail as ActivitiesDetail;
 use App\Livewire\Activities\EditMaterial;
 use App\Livewire\Activities\EditTests;
 use App\Livewire\Activities\Index as ActivityIndex;
+use App\Livewire\Activities\TestDetail;
 use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
+use App\Livewire\ExamTest;
 use App\Livewire\Home;
 use App\Livewire\Report\Index as ReportIndex;
 use App\Livewire\User\Detail;
@@ -29,6 +31,8 @@ Route::middleware('auth')->group(function(){
     Route::get("/activity/material/{id}/edit", EditMaterial::class)->name('activities.material.edit');
     Route::get("/activity/tests/{type}/{id}/edit", EditTests::class)->name('activities.tests.edit');
     Route::get("/activity/{id}/detail", ActivitiesDetail::class)->name('activities.detail');
+    Route::get("/activity/{id}/detail/{type}", TestDetail::class)->name('activities.test');
+    Route::get("/exam/{id}/", ExamTest::class)->name('exam');
     Route::get('/logout', LogoutController::class)->name('logout');
 
     Route::get('/report', ReportIndex::class)->name('report.index');

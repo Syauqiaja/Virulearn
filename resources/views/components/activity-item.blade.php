@@ -7,8 +7,13 @@
 <div class="col-md-5 col-12">
     <div class="card">
         <a href="{{ route('activities.detail', ['id' => $activity->id]) }}">
-            <img src="{{ $image_url }}"
-                class="card-img-top object-fit-cover" alt="..." style="height: 230px;">
+        <div class="position-relative">
+        @if ($activity->postTests()->first()->isCompleted())
+                <span class="badge rounded-pill bg-success position-absolute px-4 py-2" style="z-index: 1; bottom: 8px; right: 8px;">Selesai <i class="bi bi-check-circle"></i></span>
+            @endif
+                        <img src="{{ $image_url }}"
+                            class="card-img-top object-fit-cover" alt="..." style="height: 230px;">
+        </div>
         </a>
         <div class="card-body">
             <h5 class="card-title fw-bold">{{$activity->title}}</h5>

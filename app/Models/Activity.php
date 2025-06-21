@@ -17,7 +17,7 @@ class Activity extends Model
         return $this->hasMany(Exam::class, 'activity_id')->where('type', TestType::PRETEST->value);
     }
     
-    public function exams(){
+    public function latsol(){
         return $this->hasMany(Exam::class, 'activity_id')->where('type', TestType::LATSOL->value);
     }
 

@@ -5,6 +5,7 @@ namespace App\Livewire\Activities;
 use App\Models\Activity;
 use App\Models\Material;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -16,14 +17,30 @@ class Detail extends Component
     public Material $activeMaterial;
     public $userProgression;
     public $prevUrl;
+    public TestType $testType;
 
-    public function mount(Activity $id)
+    public function mount(Activity $id, Request $request)
     {
         $this->activity = $id;
+        if(!$this->activity->tests(TestType::PRETEST)->first()->isCompleted()){
+            return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::PRETEST]);
+        }
+
         $this->prevUrl = url()->previous();
-        $material = $id->materials()->whereHas('userProgress', function ($query) {
-            $query->where('user_id', Auth::user()->id);
-        })->orderBy('order', 'desc')->first();
+        $this->testType = TestType::UNDEFINED;
+        if(filled($request->m)) {
+            $material = Material::where("id", $request->m)->first();
+        }else{
+            if($this->activity->tests(TestType::LATSOL)->first()->isCompleted()){
+                return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::POSTTEST]);
+            }else if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()->is_completed){
+                return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::LATSOL]);
+            }
+
+            $material = $id->materials()->whereHas('userProgress', function ($query) {
+                $query->where('user_id', Auth::user()->id);
+            })->orderBy('order', 'desc')->first();
+        }
 
         if (!$material) {
             $material = $id->materials()->first();
@@ -59,13 +76,13 @@ class Detail extends Component
 
         $material = $this->activeMaterial->next();
         if (!$material) return;
-        $this->activeMaterial = $material;
 
-        $this->activeMaterial->userProgress()->updateOrCreate([
+        $material->userProgress()->updateOrCreate([
             'is_completed' => false,
             'user_id' => Auth::user()->id,
             'last_viewed_at' => Carbon::now(),
         ]);
+        return $this->redirect(route('activities.detail', ['id'=> $this->activity->id, 'm' => $material->id]));
     }
     public function previous()
     {
@@ -75,11 +92,11 @@ class Detail extends Component
 
         $material = $this->activeMaterial->previous();
         if (!$material) return;
-        $this->activeMaterial = $material;
 
-        $this->activeMaterial->userProgress()->update([
+        $material->userProgress()->update([
             'last_viewed_at' => Carbon::now(),
         ]);
+        return $this->redirect(route('activities.detail', ['id'=> $this->activity->id, 'm' => $material->id]));
     }
     public function complete()
     {
@@ -88,6 +105,6 @@ class Detail extends Component
             'last_viewed_at' => Carbon::now(),
         ]);
 
-        return $this->redirect($this->prevUrl ?? route('home'), navigate: true);
+        return $this->redirect(route('activities.test', ['id' => $this->activity->id, 'type' => TestType::LATSOL]), navigate: true);
     }
 }
