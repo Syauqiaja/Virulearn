@@ -15,18 +15,22 @@
     <x-navigation.navlink :href="route('home')" :active="request()->routeIs('home')">Dashboard</x-navigation.navlink>
     <x-navigation.navlink :href="route('activities.index')"
       :active="request()->routeIs('activities.*')">Aktivitas</x-navigation.navlink>
-    <x-navigation.navlink :href="route('report.index')" :active="request()->routeIs('report.*')">Laporan
-      Siswa</x-navigation.navlink>
+      @if (Auth::user()->hasRole('admin'))
+      <x-navigation.navlink :href="route('user.index')" :active="request()->routeIs('user.*')">Daftar Member</x-navigation.navlink>
+      @endif
+      <x-navigation.navlink :href="route('article.list')" :active="request()->routeIs('article.*')">Artikel</x-navigation.navlink>
+
+      <x-navigation.navlink :href="route('viewer')" :active="request()->routeIs('viewer')">3D Viewer</x-navigation.navlink>
   </ul>
   <hr>
   <div class="dropdown ">
     <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2"
       data-bs-toggle="dropdown" aria-expanded="false">
-      {{-- <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2"> --}}
+      <img src="{{ $user->photo ? storage_url($user->photo) : asset('assets/default_avatar.jpg') }}" alt="" width="32" height="32" class="rounded-circle me-2">
       <strong>{{$user->name}}</strong>
     </a>
     <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-      <li><a class="dropdown-item" href="#">Profile</a></li>
+      <li><a class="dropdown-item" href="{{ route('user.detail', ['user' => Auth::user()->id]) }}">Profile</a></li>
       <li>
         <hr class="dropdown-divider">
       </li>

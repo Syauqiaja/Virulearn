@@ -23,3 +23,19 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<IfModule mod_mime.c>
+  AddType application/wasm .wasm
+  AddType application/wasm .wasm.gz
+  AddEncoding gzip .gz
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.gz$">
+    Header set Content-Encoding gzip
+  </FilesMatch>
+
+  <FilesMatch "\.wasm\.gz$">
+    Header set Content-Type application/wasm
+  </FilesMatch>
+</IfModule>

@@ -33,7 +33,7 @@ class Detail extends Component
         }else{
             if($this->activity->tests(TestType::LATSOL)->first()->isCompleted()){
                 return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::POSTTEST]);
-            }else if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()->is_completed){
+            }else if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed){
                 return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::LATSOL]);
             }
 

@@ -2,6 +2,15 @@ $primary: #47ACFE;
 .btn-primary{
     color: white !important;
 }
+.btn-outline-primary{
+    &:hover {
+        color: #ddf0ff !important;
+    }
+
+    &:active {
+        color: #cde7fb !important;
+    }
+}
 .btn-light {
     color: $primary !important;
     background-color: white !important;

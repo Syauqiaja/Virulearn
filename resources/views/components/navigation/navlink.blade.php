@@ -5,7 +5,6 @@
 <li class="nav-item">
     <a wire:navigate {{ $attributes->merge(['class' => $classes]) }} aria-current="page">
         <svg class="bi me-2" width="16" height="16">
-            <use xlink:href="#home"></use>
         </svg>
 
         {{ $slot }}
