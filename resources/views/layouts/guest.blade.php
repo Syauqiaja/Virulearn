@@ -6,7 +6,7 @@
   <style>
     .bg-blue-gradient {
       background: #56CCF2;
-      background: linear-gradient(180deg, rgba(86, 204, 242, 1) 0%, rgba(47, 128, 237, 1) 100%);
+      background: linear-gradient(180deg, rgb(107, 86, 242) 0%, rgb(136, 47, 237) 100%);
     }
   </style>
 

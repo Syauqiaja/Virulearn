@@ -1,8 +1,13 @@
-@push('styles')
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity Web Player | Virulearn</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
-@endpush
-<div>
+  </head>
+  <body>
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
       <div id="unity-loading-bar">
@@ -18,8 +23,6 @@
         <div id="unity-build-title"></div>
       </div>
     </div>
-</div>
-@push('scripts')
     <script>
       var canvas = document.querySelector("#unity-canvas");
 
@@ -120,4 +123,5 @@
       document.body.appendChild(script);
 
     </script>
-@endpush
+  </body>
+</html>

@@ -1,14 +1,14 @@
-$primary: #47ACFE;
+$primary: #a347fe;
 .btn-primary{
     color: white !important;
 }
 .btn-outline-primary{
     &:hover {
-        color: #ddf0ff !important;
+        color: #ebddff !important;
     }
 
     &:active {
-        color: #cde7fb !important;
+        color: #dbcdfb !important;
     }
 }
 .btn-light {
@@ -17,11 +17,11 @@ $primary: #47ACFE;
     border: none !important;
 
     &:hover {
-        background-color: #ddf0ff !important;
+        background-color: #e8ddff !important;
     }
 
     &:active {
-        background-color: #cde7fb !important;
+        background-color: #dfcdfb !important;
     }
 }
 
