@@ -12,4 +12,8 @@ class UserMaterialProgress extends Model
         'is_completed',
         'last_viewed_at',
     ];
+
+    public function material(){
+        return $this->belongsTo(Material::class, 'material_id');
+    }
 }

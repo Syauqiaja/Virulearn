@@ -30,7 +30,11 @@
         <div class="bg-white py-2 px-4 d-flex align-items-center">
             <button class="btn text-center justify-content-center align-items-center d-flex text-primary"
                 x-on:click="history.back()">
-                <i class="bi bi-arrow-left-circle me-3 fs-4"></i> {{ $activity->title }}
+                @if ($activity)
+                    <i class="bi bi-arrow-left-circle me-3 fs-4"></i> {{ $activity->title }}
+                @else
+                    <i class="bi bi-arrow-left-circle me-3 fs-4"></i> {{ $testType->name }}
+                @endif
             </button>
             @if ($exam->duration != null)
             <div class="ms-auto fs-5">

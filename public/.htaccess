@@ -39,3 +39,14 @@
     Header set Content-Type application/wasm
   </FilesMatch>
 </IfModule>
+
+<IfModule mod_mime.c>
+    AddEncoding gzip .gz
+    AddType application/javascript .js.gz
+</IfModule>
+
+<FilesMatch "\.js\.gz$">
+    ForceType application/javascript
+    Header set Content-Encoding gzip
+    Header set X-Content-Type-Options nosniff
+</FilesMatch>

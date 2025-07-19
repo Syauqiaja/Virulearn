@@ -35,7 +35,7 @@
                   <div class="d-flex justify-content-start">
                      <a href="{{ $article->url }}" target="_blank" class="btn btn-outline-primary">Buka artikel <i class="ms-1 bi bi-arrow-right-circle"></i></a> 
                      @haspermission('modify article')
-                        <a href="{{ $article->url }}" wire:click="$dispatch('edit-mode', {id: {{ $article->id }}})" target="_blank" class="ms-2 btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createNewModal">Edit <i class="ms-1 bi bi-pencil"></i></a> 
+                        <a href="#" wire:click="$dispatch('edit-mode', {id: {{ $article->id }}})" target="_blank" class="ms-2 btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#createNewModal">Edit <i class="ms-1 bi bi-pencil"></i></a> 
                      @endhaspermission
                   </div>
                   </div>

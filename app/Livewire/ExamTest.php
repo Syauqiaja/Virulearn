@@ -15,7 +15,7 @@ use Livewire\Component;
 #[Layout("layouts.empty")]
 class ExamTest extends Component
 {
-    public Activity $activity;
+    public $activity;
     public TestType $testType;
     public Exam $exam;
     public $userProgression;

@@ -1,49 +1,39 @@
+@push('styles')
+    <style>
+        .btn-white:hover{
+            border: 2px solid #a347fe;
+        }
+        .btn-white{
+            border: 2px solid white;
+        }
+    </style>
+@endpush
 <div>
     <x-flash-message />
-    <x-admin-body-header :title="'Laporan Siswa'" :description="'Laporan progress siswa'">
+    <x-admin-body-header :title="'Laporan Aktivitas'" :description="'Laporan progress tiap aktivitas'">
     </x-admin-body-header>
 
-    <div class="p-3 bg-white mt-3 mx-0 row g-2">
-        <table id="userTable" class="display">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+    <div class="mt-3 mx-0 row g-2">
+        @foreach ($activities as $activity)
+            <div class="col-md-6 col-sm-12">
+                <a class="btn-white bg-white p-3 rounded row m-0 w-100" style="text-decoration: none;" href="{{ route('report.detail', ['activity' => $activity->id]) }}">
+                    <div class="col-3">
+                        <img src="{{ storage_url($activity->cover_image) }}" class="" alt="..." style="height: 64px; aspect-ratio: 1; object-fit: cover;">
+                    </div>
+                    <div class="col-9 text-start">
+                        <h6 class="fw-bold">{{$activity->title}}</h6>
+                        <p>
+                            {{ $activity->description }}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        @endforeach
     </div>
 </div>
 
-@script
-<script>
-    let datatable;
-    window.addEventListener('livewire:navigated', ()=>{
-        let wrapper = document.getElementsByClassName('dataTables_wrapper');
-        if(wrapper.length > 0){
-            console.warn('datatable already initialized');
-            return;
-        }
+@push('scripts')
+    <script>
         
-
-        datatable = $('#userTable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: "{{ route('users.datatable') }}",
-                columns: [
-                    { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
-                    { data: 'email', name: 'email' },
-                    { data: 'action', name: 'action', orderable: false, searchable: false }
-                ]
-            });
-        
-        console.log('message.processed');
-        console.log($wire);
-        
-    });
-</script>
-@endscript
+    </script>
+@endpush

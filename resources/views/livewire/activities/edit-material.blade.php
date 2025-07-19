@@ -23,7 +23,7 @@
 @script
 <script>
     let editor;
-
+    Quill.register('modules/imageResize', QuillResizeModule);
     function initQuill(content = '') {
         const el = document.getElementById('editor');
         if (!el) {
@@ -42,6 +42,9 @@
             editor = new Quill('#editor', {
                 theme: 'snow',
                 modules: {
+                    imageResize: {
+                        displaySize: true
+                    },
                     toolbar: [
                         ['bold', 'italic', 'underline'],
                         [{ 'header': 1 }, { 'header': 2 }],
@@ -54,7 +57,7 @@
             });
 
             editor.getModule('toolbar').addHandler('image', function () {
-                @this.set('content', editor.root.innerHTML);
+                @this.updateContent(editor.root.innerHTML);
 
                 var input = document.createElement('input');
                 input.setAttribute('type', 'file');
@@ -82,12 +85,14 @@
         editor.on('text-change', function (delta, oldDelta, source) {
             const html = editor.root.innerHTML;
             @this.updateContent(html);
+            console.log('Edited');
             var currentImages = [];
 
             var container = editor.container.firstChild;
 
             container.querySelectorAll('img').forEach(function (img) {
                 currentImages.push(img.src);
+            console.log(img);
             });
 
             var removedImages = previousImages.filter(function (image) {

@@ -14,11 +14,6 @@ $user = Illuminate\Support\Facades\Auth::user();
     <x-navigation.navlink :icon="'bi-book'" :href="route('activities.index')"
       :active="request()->routeIs('activities.*')">Aktivitas
     </x-navigation.navlink>
-    @if (Auth::user()->hasRole('admin'))
-    <x-navigation.navlink :icon="'bi-people'" :href="route('user.index')" :active="request()->routeIs('user.*')">Daftar
-      Member
-    </x-navigation.navlink>
-    @endif
     <x-navigation.navlink :icon="'bi-card-text'" :href="route('article.list')"
       :active="request()->routeIs('article.*')">
       Artikel
@@ -26,6 +21,42 @@ $user = Illuminate\Support\Facades\Auth::user();
 
     <x-navigation.navlink :icon="'bi-box'" :href="route('viewer')" :active="request()->routeIs('viewer')">3D Viewer
     </x-navigation.navlink>
+    
+    @if (Auth::user()->hasRole('admin'))
+    <x-navigation.navlink :icon="'bi-people'" :href="route('user.index')" :active="request()->routeIs('user.*')">Daftar
+      Member
+    </x-navigation.navlink>
+    <x-navigation.navlink :icon="'bi-bar-chart'" :href="route('report.index')" :active="request()->routeIs('report.*')">
+      Report Aktivitas
+    </x-navigation.navlink>
+    <li class="accordion nav-item">
+      <h2 class="">
+        <button class="nav-link accordion-button px-3 text-primary {{ request()->routeIs('edit-exam.*') ? '' : 'collapsed' }} d-flex align-items-center" type="button"
+          data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+          aria-controls="panelsStayOpen-collapseOne">
+
+          <i class="bi bi-puzzle fs-3 ms-0"></i><span class="fs-6 ms-2 fw-light">
+            Edit Soal
+          </span>
+        </button>
+      </h2>
+      <div id="panelsStayOpen-collapseOne"
+        class="accordion-collapse collapse {{ request()->routeIs('edit-exam.*') ? 'show' : '' }}">
+        <div class="accordion-body">
+          <ul class="nav nav-pills mb-auto flex-column">
+            <x-navigation.navlink :navigate="false" :href="route('edit-exam.pretest', ['type' => 'pretest'])" :active="request()->routeIs('edit-exam.pretest')">
+              Pre-Test
+            </x-navigation.navlink>
+            <x-navigation.navlink :navigate="false" :href="route('edit-exam.posttest', ['type' => 'posttest'])" :active="request()->routeIs('edit-exam.posttest')">
+              Post-Test
+            </x-navigation.navlink>
+          </ul>
+        </div>
+      </div>
+      <div class="">
+      </div>
+    </li>
+    @endif
   </ul>
   <hr>
   <div class="dropdown ">

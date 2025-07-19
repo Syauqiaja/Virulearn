@@ -25,7 +25,10 @@
         @endif
     </div>
 
-    <div class="modal fade" id="createNewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="createNewModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
         <livewire:activities.components.create-activity-dialog></livewire:activities.components.create-activity-dialog>
+    </div>
+    <div class="modal fade" id="editLKPDModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+        <livewire:create-l-k-p-d></livewire:create-l-k-p-d>
     </div>
 </div>

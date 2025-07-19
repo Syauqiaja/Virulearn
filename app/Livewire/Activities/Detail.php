@@ -22,18 +22,12 @@ class Detail extends Component
     public function mount(Activity $id, Request $request)
     {
         $this->activity = $id;
-        if(!$this->activity->tests(TestType::PRETEST)->first()->isCompleted()){
-            return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::PRETEST]);
-        }
 
         $this->prevUrl = url()->previous();
-        $this->testType = TestType::UNDEFINED;
         if(filled($request->m)) {
             $material = Material::where("id", $request->m)->first();
         }else{
-            if($this->activity->tests(TestType::LATSOL)->first()->isCompleted()){
-                return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::POSTTEST]);
-            }else if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed){
+            if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed){
                 return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::LATSOL]);
             }
 

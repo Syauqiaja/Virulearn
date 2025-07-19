@@ -26,4 +26,11 @@ class Exam extends Model
     public function isCompleted(){
         return $this->examResults()->where('user_id', Auth::user()->id)->where('point', '>=', ($this->kkm ?? 1) / 100)->count() > 0;
     }
+
+    public function posttest(){
+        return $this->whereNull('activity_id')->where('type', 'posttest')->first();
+    }
+    public function pretest(){
+        return $this->whereNull('activity_id')->where('type', 'pretest')->first();
+    }
 }

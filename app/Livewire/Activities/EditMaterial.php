@@ -5,6 +5,7 @@ namespace App\Livewire\Activities;
 use App\Models\Activity;
 use App\Models\Material;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use phpDocumentor\Reflection\Types\This;
@@ -104,16 +105,18 @@ class EditMaterial extends Component
     public function uploadImage($image)
     {
         $imageData = substr($image, strpos($image, ',') + 1);
-        $length = strlen($imageData);
-        $lastSixCharacters = substr($imageData, $length - 20);
 
         $imageData = base64_decode($imageData);
-        $filename = $lastSixCharacters . ".png";
-        $path = "/material_images/$filename";
+
+        // Generate a random alphanumeric string for the filename
+        $filename = Str::random(20) . ".png";
+        $path = "material_images/$filename";
 
         Storage::disk('public')->put($path, $imageData);
-        $url = asset("storage/$path");
-        $this->content .= '<img style="" src="' . $url . '" alt="Uploaded Image"/>';
+        $url = storage_url($path); // Assuming this helper function exists in your app
+
+        $this->content[$this->activeIndex] .= '<img style="" src="' . $url . '" alt="Uploaded Image"/>';
+
         return $this->dispatch('imageUploaded', $url);
     }
     public function deleteImage($image)

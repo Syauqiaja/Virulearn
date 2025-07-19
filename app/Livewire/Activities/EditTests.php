@@ -5,6 +5,7 @@ namespace App\Livewire\Activities;
 use App\Models\Activity;
 use App\Models\Exam;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 
@@ -14,7 +15,6 @@ class EditTests extends Component
 {
     public int $id;
     public TestType $type;
-    public $activity;
     public Exam $test;
     public $questions = [];
     public $answers = [];
@@ -30,10 +30,10 @@ class EditTests extends Component
         'hour' => 'required_with:minute',
         'minute' => 'required_with:hour',
     ];
-    public function mount(TestType $type, int $id){
-        $this->type = $type;
-        $this->activity = Activity::find( $id );
-        $this->test = Exam::firstOrCreate(['activity_id' => $id, 'type' => $type->value]);
+    public function mount(Request $request){
+        $id = $request->id;
+        $this->type = TestType::from($request->type);
+        $this->test = Exam::firstOrCreate(['activity_id' => $id, 'type' => $this->type->value]);
 
         foreach ($this->test->questions()->get()->toArray() as $key => $value) {
             $number = $value['order'];
@@ -150,8 +150,7 @@ class EditTests extends Component
 }
 
 enum TestType: string{
-    case PRETEST = "pretest";
     case LATSOL = "latsol";
+    case PRETEST = "pretest";
     case POSTTEST = "posttest";
-    case UNDEFINED = 'undefined';
 }

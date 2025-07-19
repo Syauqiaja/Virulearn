@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityDeleteController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UnityController;
 use App\Http\Controllers\UserController;
@@ -14,6 +15,8 @@ use App\Livewire\Auth\Login;
 use App\Livewire\Auth\Register;
 use App\Livewire\ExamTest;
 use App\Livewire\Home;
+use App\Livewire\LkpdDetail;
+use App\Livewire\Report;
 use App\Livewire\Report\Index as ReportIndex;
 use App\Livewire\User\Detail;
 use App\Livewire\User\Index;
@@ -32,21 +35,29 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function(){
     Route::get('/home', Home::class)->name('home');
     Route::get('/activity', ActivityIndex::class)->name('activities.index');
-    Route::delete('/activity/{id}', ActivityIndex::class)->name('activities.delete');
+    Route::delete('/activity/{id}', [ActivityDeleteController::class, 'delete'])->name('activities.delete');
     Route::get("/activity/material/{id}/edit", EditMaterial::class)->name('activities.material.edit');
-    Route::get("/activity/tests/{type}/{id}/edit", EditTests::class)->name('activities.tests.edit');
+    Route::get("/activity/tests/edit", EditTests::class)->name('activities.tests.edit');
     Route::get("/activity/{id}/detail", ActivitiesDetail::class)->name('activities.detail');
     Route::get("/activity/{id}/detail/{type}", TestDetail::class)->name('activities.test');
+    Route::get("/activity/{id}/lkpd", LkpdDetail::class)->name('activities.lkpd');
     Route::get("/exam/{id}/", ExamTest::class)->name('exam');
     Route::get('/logout', LogoutController::class)->name('logout');
     
     Route::get('/users', Index::class)->name('user.index');
     Route::get('/users/datatable', [UserController::class, 'index'])->name('user.datatable');
+    Route::get('/users/activity/{activity}/datatable', [UserController::class, 'activityReport'])->name('user.activity.datatable');
     Route::get('/users/{user}/detail', Detail::class)->name('user.detail');
     Route::get('/users/{user}/detail/chart',[ UserController::class, 'chart'])->name('user.detail.chart');
 
     Route::get('/article/list', AdminArticleIndex::class)->name('article.list');
     Route::get('/article/edit', AdminArticleEdit::class)->name('article.edit');
+
+    Route::get("/edit-exam/pretest", EditTests::class)->name('edit-exam.pretest');
+    Route::get("/edit-exam/posttest", EditTests::class)->name('edit-exam.posttest');
+
+    Route::get('/report', ReportIndex::class)->name('report.index');
+    Route::get('/report/{activity}', \App\Livewire\Report\Detail::class)->name('report.detail');
 
     Route::get('/viewer', Viewer3DIndex::class)->name('viewer');
 });

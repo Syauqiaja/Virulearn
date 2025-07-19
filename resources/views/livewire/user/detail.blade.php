@@ -127,18 +127,8 @@
                     labels: d.labels,
                     datasets: [
                         {
-                            label: 'Pretest',
-                            data: d.data['pretest'],
-                            borderWidth: 1
-                        },
-                        {
                             label: 'Latihan Soal',
                             data: d.data['latsol'],
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'Posttest',
-                            data: d.data['posttest'],
                             borderWidth: 1
                         }
                     ]

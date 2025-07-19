@@ -27,9 +27,15 @@
                         <small class="text-danger d-block">{{$message}}</small>
                     @enderror
                 </div>
+                @if ($previousImage)
+                    <div class="mt-2">
+                        <p class="mb-1">File saat ini:</p>
+                        <img src="{{ storage_url($previousImage) }}" alt="preview" style="max-width: 200px;">
+                    </div>
+                @endif
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" wire:click='resetInput'>Tutup</button>
                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Simpan</button>
             </div>
         </form>

@@ -68,22 +68,12 @@
               <a class="btn btn-{{$isCompleted ? 'outline-' : ''}}primary mx-3 py-3 fw-bold" href="{{ route('exam', ['id' => $exam->id]) }}">Mulai {{Str::title($testType->value)}}</a>
             </div>
             @if ($isCompleted)
-                @if ($testType == \App\Livewire\Activities\TestType::PRETEST)
-                  <div class="d-flex flex-column mt-2">
-                    <a class="btn btn-primary mx-3 py-3 fw-bold" href="{{ route('activities.detail', ['id' => $activity->id]) }}">Baca Materi</a>
-                  </div>
-                @elseif($testType == \App\Livewire\Activities\TestType::LATSOL)
-                  <div class="d-flex flex-column mt-2">
-                    <a class="btn btn-primary mx-3 py-3 fw-bold" href="{{ route('activities.test', ['id'=>$activity->id, 'type' => \App\Livewire\Activities\TestType::POSTTEST->value]) }}">Buka Post-Test</a>
-                  </div>
-                @elseif($testType == \App\Livewire\Activities\TestType::POSTTEST)
-                  <div class="d-flex flex-column mt-2">
-                    <a class="btn btn-primary mx-3 py-3 fw-bold" href="{{ route('home') }}">Ke Halaman Awal</a>
-                  </div>
-                @endif
+                <div class="d-flex flex-column mt-2">
+                  <a class="btn btn-primary mx-3 py-3 fw-bold" href="{{ route('home') }}">Ke Halaman Awal</a>
+                </div>
             @endif
         </div>
     </div>
   </main>
-  <x-activity-sidebar :activity="$activity" :testType="$testType"/>
+  <x-activity-sidebar :activity="$activity" :testType="\App\Livewire\Activities\TestType::LATSOL->value"/>
 </div>
