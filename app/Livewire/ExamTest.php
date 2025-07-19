@@ -55,7 +55,7 @@ class ExamTest extends Component
     }
     public function save()
     {
-        $examResult = ExamResult::firstOrCreate([
+        $examResult = ExamResult::create([
             'user_id' => Auth::user()->id,
             'exam_id' => $this->exam->id,
             'point' => 0
@@ -73,6 +73,10 @@ class ExamTest extends Component
             return $carry + ($answer->is_correct ? 1 : 0);
         }, 0) / $this->questions->count();
         $examResult->save();
-        $this->redirect(route('activities.test', ['id' => $this->activity->id, 'type' => $this->exam->type]));
+        if($this->activity){
+            $this->redirect(route('activities.test', ['activity' => $this->activity->id]));
+        }else{
+            $this->redirect(route('exam.detail', ['type' => $this->testType->value]));
+        }
     }
 }

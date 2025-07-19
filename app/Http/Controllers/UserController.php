@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Livewire\Activities\TestType;
 use App\Models\Activity;
+use App\Models\Exam;
 use App\Models\ExamResult;
 use App\Models\Material;
 use App\Models\User;
@@ -26,6 +27,22 @@ class UserController extends Controller
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
                 return view('actions.user-action', ['user' => $row]);
+            })
+            ->addColumn('pretest', function($user){
+                $exam = Exam::where('activity_id', null)->where('type', 'pretest')->first();
+                if($exam){
+                    $result = ExamResult::where('user_id', $user->id)->where('exam_id', $exam->id)->first();
+                    return floor( ($result?->point ?? 0) * 100)."%";
+                }
+                return '0%';
+            })
+            ->addColumn('posttest', function($user){
+                $exam = Exam::where('activity_id', null)->where('type', 'posttest')->first();
+                if($exam){
+                    $result = ExamResult::where('user_id', $user->id)->where('exam_id', $exam->id)->first();
+                    return floor( ($result?->point ?? 0) * 100)."%";
+                }
+                return '0%';
             })
             ->rawColumns(['action'])
             ->make(true);

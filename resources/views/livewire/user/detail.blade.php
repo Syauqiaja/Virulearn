@@ -46,6 +46,18 @@
                                 aria-valuemin="0" aria-valuemax="100">{{$completedMaterials * 100}}%</div>
                         </div>
                     </div>
+                    <div class="mt-2">
+                        <div class="row gap-2 mx-0">
+                            <div class="col border border-secondary rounded p-1 text-center">
+                                <h6>Pre-Test</h6>
+                                <h5>{{$pretestPoint}}</h5>
+                            </div>
+                            <div class="col border border-secondary rounded p-1 text-center">
+                                <h6>Post-Test</h6>
+                                <h5>{{$posttestPoint}}</h5>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,7 +13,9 @@
       @endforeach
 
       <li class="nav-item d-flex flex-column mt-5">
-        <a class="{{ $this->activity->latsol->first()->isCompleted() ? "btn btn".($testType == \App\Livewire\Activities\TestType::LATSOL->value ? '' : '-outlined')."-success" : "btn btn".($testType == \App\Livewire\Activities\TestType::LATSOL->value ? '' : '-outlined')."-secondary" }} {{ $this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed == true ? "" : "disabled" }}" aria-current="page" href="{{ route('activities.test', ['id' => $this->activity->id, 'type' => \App\Livewire\Activities\TestType::LATSOL]) }}">
+        <a class="{{ $this->activity->latsol->first()->isCompleted() ? "btn btn".($testType == \App\Livewire\Activities\TestType::LATSOL->value ? '' : '-outlined')."-success" : "btn btn".($testType == \App\Livewire\Activities\TestType::LATSOL->value ? '' : '-outlined')."-secondary" }} {{ $this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed == true ? "" : "disabled" }}" 
+          aria-current="page" 
+          href="{{ route('activities.test', ['activity' => $this->activity->id]) }}">
           <i class="bi bi-file-earmark-medical"></i> Latihan Soal
         </a>
       </li>

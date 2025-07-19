@@ -8,22 +8,26 @@
             </a>
         </div>
         <div class="py-3 px-5 d-flex row gap-2 align-items-start justify-content-center">
-            <div class="col p-3 bg-white">
-                <h5>Lembar Kerja Peserta Didik</h5>
-                <p>Download file LKPD di bawah ini, kemudian kerjakan menggunakan form yang telah disediakan</p>
-                <p>
-
-                </p>
-                <div>
-                    <div class="card-body h-100">
-                        <h5 class="card-title">File LKPD {{ $activity->title }}</h5>
-                        <div class="d-flex justify-content-start mt-2">
-                            <a href="{{ storage_url($lkpd->file) }}" target="_blank" class="btn btn-outline-primary">
-                                <i class="ms-1 bi bi-file-earmark-richtext"></i>
-                                Buka LKPD
-                            </a>
+            <div class="col-md col-sm-12">
+                <div class="p-3 bg-white">
+                    <h5>Lembar Kerja Peserta Didik</h5>
+                    <p>Download file LKPD di bawah ini, kemudian kerjakan menggunakan form yang telah disediakan</p>
+                    <div>
+                        <div class="card-body h-100">
+                            <h5 class="card-title">File LKPD {{ $activity->title }}</h5>
+                            <div class="d-flex justify-content-start mt-2">
+                                <a href="{{ storage_url($lkpd->file) }}" target="_blank" class="btn btn-outline-primary">
+                                    <i class="ms-1 bi bi-file-earmark-richtext"></i>
+                                    Buka LKPD
+                                </a>
+                            </div>
                         </div>
                     </div>
+                </div>
+                <div class="p-3 bg-white mt-2">
+                    <p>Anda bisa melihat nilai jawaban yang anda dapatkan di sini, setelah jawaban dikoreksi oleh guru.</p>
+
+                    <h5>Skor : <span class="{{ $point ? ($point > $lkpd->kkm ? 'text-success' : 'text-warning') : ''}}"> {{$point ? $point : '- belum dikoreksi -'}}</span></h5>
                 </div>
             </div>
             <div class="bg-white p-3 text-center col-md-8 col-sm-12">

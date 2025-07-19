@@ -21,6 +21,7 @@ class CreateLKPD extends Component
     #[On('edit-lkpd')]
     public function editLKPD($id){
         $this->activity = Activity::where('id', $id)->first();
+        $this->kkm = $this->activity->lkpd?->kkm;
     }
     public function save(){
         $this->validate();

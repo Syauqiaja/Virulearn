@@ -74,4 +74,5 @@
         </div>
     </div>
   </main>
+    <x-activity-sidebar :activity="$activity" :testType="\App\Livewire\Activities\TestType::LATSOL->value"/>
 </div>

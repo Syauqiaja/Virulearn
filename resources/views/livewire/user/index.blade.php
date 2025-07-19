@@ -10,6 +10,8 @@
                     <th>No</th>
                     <th>Nama</th>
                     <th>Email</th>
+                    <th>Pre-Test</th>
+                    <th>Post-Test</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -37,13 +39,11 @@
                     { data: 'id', name: 'id' },
                     { data: 'name', name: 'name' },
                     { data: 'email', name: 'email' },
+                    { data: 'pretest', name: 'pretest' },
+                    { data: 'posttest', name: 'posttest' },
                     { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
-        
-        console.log('message.processed');
-        console.log($wire);
-        
     });
 </script>
 @endscript

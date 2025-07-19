@@ -8,6 +8,7 @@ use App\Livewire\Activities\Detail as ActivitiesDetail;
 use App\Livewire\Activities\EditMaterial;
 use App\Livewire\Activities\EditTests;
 use App\Livewire\Activities\Index as ActivityIndex;
+use App\Livewire\Activities\Latsol;
 use App\Livewire\Activities\TestDetail;
 use App\Livewire\Admin\Article\Index as AdminArticleIndex;
 use App\Livewire\Admin\Article\Edit as AdminArticleEdit;
@@ -39,9 +40,9 @@ Route::middleware('auth')->group(function(){
     Route::get("/activity/material/{id}/edit", EditMaterial::class)->name('activities.material.edit');
     Route::get("/activity/tests/edit", EditTests::class)->name('activities.tests.edit');
     Route::get("/activity/{id}/detail", ActivitiesDetail::class)->name('activities.detail');
-    Route::get("/activity/{id}/detail/{type}", TestDetail::class)->name('activities.test');
+    Route::get("/activity/{activity}/detail/latsol", Latsol::class)->name('activities.test');
     Route::get("/activity/{id}/lkpd", LkpdDetail::class)->name('activities.lkpd');
-    Route::get("/exam/{id}/", ExamTest::class)->name('exam');
+    Route::get("/exam/{id}", ExamTest::class)->name('exam');
     Route::get('/logout', LogoutController::class)->name('logout');
     
     Route::get('/users', Index::class)->name('user.index');
@@ -49,16 +50,17 @@ Route::middleware('auth')->group(function(){
     Route::get('/users/activity/{activity}/datatable', [UserController::class, 'activityReport'])->name('user.activity.datatable');
     Route::get('/users/{user}/detail', Detail::class)->name('user.detail');
     Route::get('/users/{user}/detail/chart',[ UserController::class, 'chart'])->name('user.detail.chart');
-
+    
     Route::get('/article/list', AdminArticleIndex::class)->name('article.list');
     Route::get('/article/edit', AdminArticleEdit::class)->name('article.edit');
-
+    
     Route::get("/edit-exam/pretest", EditTests::class)->name('edit-exam.pretest');
     Route::get("/edit-exam/posttest", EditTests::class)->name('edit-exam.posttest');
-
+    
     Route::get('/report', ReportIndex::class)->name('report.index');
     Route::get('/report/{activity}', \App\Livewire\Report\Detail::class)->name('report.detail');
-
+    
+    Route::get("/exam/{type}/detail", TestDetail::class)->name('exam.detail');
     Route::get('/viewer', Viewer3DIndex::class)->name('viewer');
 });
 

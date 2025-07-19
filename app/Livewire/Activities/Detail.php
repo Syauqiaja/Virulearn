@@ -28,7 +28,7 @@ class Detail extends Component
             $material = Material::where("id", $request->m)->first();
         }else{
             if($this->activity->materials()->orderBy('order', 'desc')->first()->userProgress()->first()?->is_completed){
-                return redirect()->route('activities.test', ['id' => $id->id, 'type' => TestType::LATSOL]);
+                return redirect()->route('activities.test', ['activity' => $id->id]);
             }
 
             $material = $id->materials()->whereHas('userProgress', function ($query) {
