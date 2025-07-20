@@ -2,7 +2,7 @@
     <x-flash-message />
     <x-admin-body-header :title="'Daftar Aktivitas'" :description="'Daftar aktivitas yang telah ditambahkan'">
         @haspermission('modify activity')
-        <button class="btn btn-primary px-5" data-bs-toggle="modal" data-bs-target="#createNewModal">Buat Baru
+        <button class="btn btn-primary px-5 mt-3" data-bs-toggle="modal" data-bs-target="#createNewModal">Buat Baru
             +</button>
         @endhaspermission
     </x-admin-body-header>

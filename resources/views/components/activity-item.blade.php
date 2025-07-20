@@ -7,7 +7,7 @@ $latsolCount = $activity->latsol()?->first()?->questions()->count() ?? 0;
 $canOpen = $materialCount > 0 && $latsolCount > 0;
 @endphp
 
-<div class="col-md-5 col-12">
+<div class="col-md-5 col-12 p-0">
     <div class="card">
         <a href="{{ $canOpen ? route('activities.detail', ['id' => $activity->id]) : '#'}}">
             <div class="position-relative">

@@ -40,6 +40,7 @@
         datatable = $('#userTable').DataTable({
                 processing: true,
                 serverSide: true,
+                scrollX: true,
                 ajax: "{{ route('user.activity.datatable', ['activity' => $activity->id]) }}",
                 columns: [
                     { data: 'id', name: 'id' },

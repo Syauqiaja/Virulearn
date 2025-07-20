@@ -25,6 +25,22 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     -->
   <script src="https://cdn.jsdelivr.net/npm/quill@2.0.0-rc.5/dist/quill.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('sidebarMenu');
+    const toggleBtn = document.getElementById('sidebarToggleBtn');
+
+    sidebar.addEventListener('show.bs.collapse', function () {
+      toggleBtn.setAttribute('aria-expanded', 'true');
+    });
+
+    sidebar.addEventListener('hide.bs.collapse', function () {
+      toggleBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
   @stack('scripts')
 </body>
 

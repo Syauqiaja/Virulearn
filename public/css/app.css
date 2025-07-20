@@ -1,49 +1,114 @@
-.sidebar {
-    z-index: 1030;
-    overflow-y: auto;
-  }
-
-  .max-lines-2 {
-   overflow: hidden;
-   display: -webkit-box;
-   -webkit-line-clamp: 2; /* number of lines to show */
-           line-clamp: 2; 
-   -webkit-box-orient: vertical;
+/* Clamp long text */
+.max-lines-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-
+/* Annotation bubble */
 .annotation {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    margin-left: 15px;
-    margin-top: 15px;
-    padding: 1em;
-    width: 200px;
-    color: #fff;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: .5em;
-    font-size: 12px;
-    line-height: 1.2;
-    transition: opacity .5s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  margin-left: 15px;
+  margin-top: 15px;
+  padding: 1em;
+  width: 200px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.8);
+  border-radius: .5em;
+  font-size: 12px;
+  line-height: 1.2;
+  transition: opacity .5s;
 }
-.annotation::before{
-        content: '1';
-        position: absolute;
-        top: -30px;
-        left: -30px;
-        width: 30px;
-        height: 30px;
-        border: 2px solid #fff;
-        border-radius: 50%;
-        font-size: 16px;
-        line-height: 30px;
-        text-align: center;
-        background: rgba(0, 0, 0, 0.8);
+
+.annotation::before {
+  content: '1';
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 #number {
-    position: absolute;
-    z-index: -1;
+  position: absolute;
+  z-index: -1;
+}
+
+
+/* Mobile toggle fix */
+#mobileSidebarToggle {
+  z-index: 1050;
+  position: sticky;
+  top: 0;
+}
+
+/* Sidebar Base - Desktop */
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 300px;
+    transform: none !important;
+    opacity: 1 !important;
+    display: block !important;
+    z-index: 1000;
+  }
+  
+  .main-content {
+    margin-left: 300px;
+  }
+}
+
+/* Sidebar - Mobile */
+@media (max-width: 767.98px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 300px;
+    background: #fff;
+    z-index: 1040;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    display: block !important;
+  }
+  
+  .sidebar.show {
+    transform: translateX(0);
+  }
+}
+
+/* Backdrop for mobile */
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1030;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-backdrop.show {
+  opacity: 1;
+  visibility: visible;
 }

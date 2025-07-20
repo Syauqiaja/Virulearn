@@ -20,7 +20,7 @@ class Edit extends Component
 
     public $thumbnail = null;
     public $overview = null;
-    public Article $editedArticle;
+    public $editedArticle = null;
     public $previousThumbnail = null;
     public function render()
     {
